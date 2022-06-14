@@ -1,4 +1,5 @@
 ﻿using Allup.DAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,7 +18,19 @@ namespace Allup.Controllers
         }
         public async Task<IActionResult>  Index()
         {
+            HttpContext.Response.Cookies.Append("p129", "P129 Hello Cookie");
             return View(await _context.Products.ToListAsync());
         }
+        public IActionResult GetSession()
+        {
+            string session = HttpContext.Session.GetString("p129");
+            return Content(session);
+        }
+        public IActionResult GetCookie()
+        {
+            string session = HttpContext.Request.Cookies["p129"];
+            return Content(session);
+        }
+
     }
 }

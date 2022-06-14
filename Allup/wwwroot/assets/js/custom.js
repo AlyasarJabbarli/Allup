@@ -30,9 +30,47 @@
                 focusOnSelect: true,
                 speed: 400,
             });
-
         })
+    })
+    $('.searchinput').keyup(function () {
+        let inputvalue = $(this).val();
+        console.log(inputvalue);
 
+        let url = $(this).data(`url`)
+        console.log(url);
 
+        url = url + "?search=" + inputvalue;
+        console.log(url);
+        if (inputvalue) {
+            fetch(url)
+                .then(res => res.text())
+                .then(data => {
+                    $('.search-body .list-group').html(data);
+                })
+        }
+        else {
+            $('.search-body .list-group').html('');
+        }
+        
+    })
+    $('.addbasket').click(function (e) {
+        e.preventDefault();
+
+        let url = $(this).attr('href');
+
+        fetch(url)
+            .then(res => res.text())
+            .then(data => {
+                $('.mini-cart').html(data);
+        })
+    })
+    $('.product-close').click(function (e) {
+        e.preventDefault();
+
+        let url = $(this).attr('href');
+
+        fetch(url).then(res => res.text()).then(data => {
+            $('.mini-cart').html(data);
+        })
     })
 })
